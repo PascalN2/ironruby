@@ -384,8 +384,7 @@ namespace IronRuby.Builtins {
         }
 
         [RubyMethod("priority")]
-        public static object Priority(Thread/*!*/ self)
-        {
+        public static object Priority(Thread/*!*/ self) {
             RubyThreadInfo.RegisterThread(Thread.CurrentThread);
             switch (self.Priority)
             {
@@ -405,8 +404,7 @@ namespace IronRuby.Builtins {
         }
 
         [RubyMethod("priority=")]
-        public static Thread Priority(Thread/*!*/ self, int priority)
-        {
+        public static Thread Priority(Thread/*!*/ self, int priority) {
             RubyThreadInfo.RegisterThread(Thread.CurrentThread);
             if (priority <= -2)
                 self.Priority = ThreadPriority.Lowest;
