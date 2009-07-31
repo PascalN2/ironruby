@@ -383,8 +383,44 @@ namespace IronRuby.Builtins {
             return info.GetKeys();
         }
 
-        //    priority
-        //    priority=
+        [RubyMethod("priority")]
+        public static object Priority(Thread/*!*/ self)
+        {
+            RubyThreadInfo.RegisterThread(Thread.CurrentThread);
+            switch (self.Priority)
+            {
+                case ThreadPriority.Lowest:
+                    return -2;
+                case ThreadPriority.BelowNormal:
+                    return -1;
+                case ThreadPriority.Normal:
+                    return 0;
+                case ThreadPriority.AboveNormal:
+                    return 1;
+                case ThreadPriority.Highest:
+                    return 2;
+                default:
+                    return 0;
+            }
+        }
+
+        [RubyMethod("priority=")]
+        public static Thread Priority(Thread/*!*/ self, int priority)
+        {
+            RubyThreadInfo.RegisterThread(Thread.CurrentThread);
+            if (priority <= -2)
+                self.Priority = ThreadPriority.Lowest;
+            else if (priority == -1)
+                self.Priority = ThreadPriority.BelowNormal;
+            else if (priority == 0)
+                self.Priority = ThreadPriority.Normal;
+            else if (priority == 1)
+                self.Priority = ThreadPriority.AboveNormal;
+            else
+                self.Priority = ThreadPriority.Highest;
+
+            return self;
+        }
 
         #region raise, fail
 
